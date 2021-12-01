@@ -19,7 +19,7 @@ def get_data(data):
     for intent in data['intents']:
         for pattern in intent['patterns']:
             training_sentences.append(pattern)
-            training_labels.append(['tag'])
+            training_labels.append(intent['tag'])
         responses.append(intent['responses'])
 
         if intent['tag'] not in labels:
@@ -43,6 +43,7 @@ def tokenize_labels(training_sentences, vocab_size, max_len, oov_token):
     sequences = tokenizer.texts_to_sequences(training_sentences)
     padded_sequences = pad_sequences(sequences, truncating='post', maxlen=max_len)
     return padded_sequences, word_index
+
 
 def create_model(vocab_size, embedding_dim, max_len, num_classes):
     model = models.Sequential()
@@ -71,5 +72,5 @@ embedding_dim = 16
 
 padded_sequences, word_index = tokenize_labels(training_sentences, vocab_size, max_len, '<OOV>')
 model = create_model(vocab_size, embedding_dim,max_len, num_classes)
-history = train_model(model, padded_sequences, labels)
+history = train_model(100, model, padded_sequences, training_labels)
 print(history)
