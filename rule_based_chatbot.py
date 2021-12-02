@@ -25,7 +25,6 @@ def get_data(data):
         if intent['tag'] not in labels:
             labels.append(intent['tag'])
 
-
     return training_sentences, training_labels, labels, responses
 
 
@@ -53,14 +52,12 @@ def create_model(vocab_size, embedding_dim, max_len, num_classes):
     model.add(layers.Dense(64, activation='relu'))
     model.add(layers.Dense(num_classes, activation='softmax'))
     model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics='accuracy')
-
     return model
 
 
 def train_model(num_epochs, model, X_train, y_train):
     history = model.fit(X_train, np.array(y_train), epochs=num_epochs)
     return history
-
 
 
 training_sentences, training_labels, labels, responses = get_data(data)
