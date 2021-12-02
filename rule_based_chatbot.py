@@ -71,3 +71,4 @@ padded_sequences, word_index = tokenize_labels(training_sentences, vocab_size, m
 model = create_model(vocab_size, embedding_dim,max_len, num_classes)
 training_labels = encode_labels(training_labels)
 history = train_model(100, model, padded_sequences, training_labels)
+
